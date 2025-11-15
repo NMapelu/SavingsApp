@@ -25,13 +25,13 @@ import com.example.semesterproject.R
 
 class MainActivity : AppCompatActivity() {
 
-    // --- New Properties to hold all challenge cards ---
+
     private lateinit var challengeCards: List<CardView>
     private lateinit var challengeTitles: List<TextView>
     private lateinit var challengeProgressBars: List<LinearProgressIndicator>
     private var fetchedChallenges: List<Challenge> = emptyList()
 
-    // --- POPUP VIEWS ---
+
     private lateinit var popupLayout: LinearLayout
     private lateinit var popupTitle: TextView
     private lateinit var popupDetails: TextView
@@ -49,21 +49,19 @@ class MainActivity : AppCompatActivity() {
         val card4 = findViewById<CardView>(R.id.cardChallenge4)
         challengeCards = listOf(card1, card2, card3, card4)
 
-        // Assuming you add TextViews with IDs like 'cardTitle1', 'cardTitle2', etc. to your XML
-        // And ProgressBars with IDs like 'progressBar1', 'progressBar2', etc.
-        // For now, we'll use the existing TextView inside the CardView
+
         challengeTitles = listOf(
-            card1.findViewById(R.id.cardTitle1), // ⚠️ Update XML to include this ID
-            card2.findViewById(R.id.cardTitle2), // ⚠️ Update XML to include this ID
-            card3.findViewById(R.id.cardTitle3), // ⚠️ Update XML to include this ID
-            card4.findViewById(R.id.cardTitle4)  // ⚠️ Update XML to include this ID
+            card1.findViewById(R.id.cardTitle1),
+            card2.findViewById(R.id.cardTitle2),
+            card3.findViewById(R.id.cardTitle3),
+            card4.findViewById(R.id.cardTitle4)
         )
 
         challengeProgressBars = listOf(
-            card1.findViewById(R.id.progressBar1), // ⚠️ Update XML to include this ID
-            card2.findViewById(R.id.progressBar2), // ⚠️ Update XML to include this ID
-            card3.findViewById(R.id.progressBar3), // ⚠️ Update XML to include this ID
-            card4.findViewById(R.id.progressBar4)  // ⚠️ Update XML to include this ID
+            card1.findViewById(R.id.progressBar1),
+            card2.findViewById(R.id.progressBar2),
+            card3.findViewById(R.id.progressBar3),
+            card4.findViewById(R.id.progressBar4)
         )
 
         popupLayout = findViewById(R.id.popupLayout)
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupCardClickListeners() {
         challengeCards.forEachIndexed { index, cardView ->
             cardView.setOnClickListener {
-                // Ensure the index is within the bounds of the fetched data list
+
                 if (index < fetchedChallenges.size) {
                     val challenge = fetchedChallenges[index]
                     showPopup(popupLayout, popupTitle, popupDetails, challenge.title, challenge.summary)
@@ -119,16 +117,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchChallenges() {
-        // ⚠️ FIX 1: Define the user ID. Since you don't have a login, use a valid test ID (e.g., 1)
+
         val userId = 1
 
-        // Run the network request on an IO (background) thread
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // ⚠️ FIX 2: Pass the userId to the getChallenges function
+
                 val response = RetrofitClient.apiService.getChallenges(userId)
 
-                // Switch back to the Main thread to update the UI
+
                 withContext(Dispatchers.Main) {
                     if (response.isSuccessful && response.body()?.success == true) {
                         fetchedChallenges = response.body()!!.challengeList
@@ -138,7 +136,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                // Switch back to the Main thread to show the error
+
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@MainActivity, "Network Error: ${e.message}", Toast.LENGTH_LONG).show()
                     e.printStackTrace()
@@ -165,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // --- POPUP HELPER FUNCTION (Unchanged) ---
+    // --- POPUP HELPER FUNCTION  ---
     private fun showPopup(
         popupLayout: LinearLayout,
         popupTitle: TextView,
