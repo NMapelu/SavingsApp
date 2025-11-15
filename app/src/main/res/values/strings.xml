@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Semester Project</string>
+    <string name="goal_progress_summary">%1$s / %2$s (%3$d%%)</string>
+    <string name="app_name">SavingsGoal</string>
 </resources>
